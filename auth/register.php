@@ -1,13 +1,14 @@
 <?php
 error_reporting(E_ALL ^ E_WARNING);
 // Turn off all error reporting
-//error_reporting(0);
+error_reporting(0);
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 require '../vendor/autoload.php';
 require '../utils/fileutils.php';
 $pdo = require_once '../connect.php';
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+
 $key = 'example_key';
 //ACCEPT POST REQUEST ONLY
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -50,12 +51,10 @@ $query = $builder->insert()
 		'verified' => 1,
 		'idProof'=> $idProof,
 		'photo' => $photo,
-		'password' => $_POST["password"],
+		'password' => password_hash($_POST["password"],PASSWORD_BCRYPT),
 		'created_at' => date('Y-m-d H:i:s')
     ]);
-//$sql = 'INSERT INTO users(name,email,phone,document_id,gender,dob,role,verified,idProof,photo,password,created_at) VALUES(:name)';
 $sql = $builder->write($query);
-//echo $sql;die;
 $values = $builder->getValues();
 
 try
@@ -65,10 +64,15 @@ try
 }
 catch(PDOException $e)
 {
-   echo $e;die;
+	if ($e->errorInfo[1] == 1062) {
+		http_response_code(409);
+   		echo "User elready exists in this email id";die;
+	} else {
+		http_response_code(500);
+   		echo $e;die;
+	}
 }
 
-$insert_id = $pdo->lastInsertId();
-http_response_code(405);
+http_response_code(200);
 echo "user registered succesfully";
 
