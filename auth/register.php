@@ -21,9 +21,9 @@ $target_dir = "../uploads/";
 $target_file = $target_dir . basename($_FILES["photo"]["name"]);
 //
 //move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file);
-$temp = explode(".", $_FILES["file"]["name"]);
+$temp = explode(".", $_FILES["photo"]["name"]);
 $newphotoname = round(microtime(true)) . '.' . end($temp);
-if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_dir . $newphotoname)){
+if(move_uploaded_file($_FILES["photo"]["tmp_name"], $target_dir . $newphotoname)){
 	//echo "success";
 	http_response_code(405);
 	echo "null";
