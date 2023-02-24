@@ -11,6 +11,11 @@ class ComposerStaticInit1c0f2d1638b229cd7ebd0004c784f261
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'N' => 
+        array (
+            'NilPortugues\\Sql\\QueryFormatter\\' => 32,
+            'NilPortugues\\Sql\\QueryBuilder\\' => 30,
+        ),
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
@@ -21,6 +26,14 @@ class ComposerStaticInit1c0f2d1638b229cd7ebd0004c784f261
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'NilPortugues\\Sql\\QueryFormatter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nilportugues/sql-query-formatter/src',
+        ),
+        'NilPortugues\\Sql\\QueryBuilder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nilportugues/sql-query-builder/src',
         ),
         'Firebase\\JWT\\' => 
         array (
