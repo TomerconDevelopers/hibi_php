@@ -1,4 +1,7 @@
 <?php
+require "../utils/fileutils.php";
+// Turn off all error reporting
+//error_reporting(0);
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 $key = 'example_key';
@@ -15,20 +18,12 @@ if(!isset($_POST["gender"])){http_response_code(400);echo "No gender specified";
 if(!isset($_POST["dob"])){http_response_code(400);echo "No dob specified";die;}
 if(!isset($_POST["password"])){http_response_code(400);echo "No password specified";die;}
 //
-//http_response_code(405);
-//echo "stuck";die;
-$target_dir = "../uploads/";
-$target_file = $target_dir . basename($_FILES["photo"]["name"]);
-//
-//move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file);
-$temp = explode(".", $_FILES["photo"]["name"]);
-$newphotoname = round(microtime(true)) . '.' . end($temp);
-if(move_uploaded_file($_FILES["photo"]["tmp_name"], $target_dir . $newphotoname)){
-	//echo "success";
-	http_response_code(405);
-	echo "null";
-}
-else{
-	http_response_code(405);
-	echo "error uploading file";die;
-}
+if(!isset($_FILES["idProof"])){http_response_code(400);echo "id proof required";die;}
+if(!isset($_FILES["photo"])){http_response_code(400);echo "photo required";die;}
+
+$photo = fileUtil($_FILES["photo"]);
+$idProof = fileUtil($_FILES["idProof"]);
+	
+http_response_code(405);
+echo "photo: $photo, idProof: $idProof";
+
